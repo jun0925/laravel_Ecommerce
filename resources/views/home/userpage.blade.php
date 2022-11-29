@@ -33,15 +33,12 @@
       <!-- why section -->
       @include('home.why')
       <!-- end why section -->
-      
       <!-- arrival section -->
       @include('home.new_arival')
       <!-- end arrival section -->
-      
       <!-- product section -->
       @include('home.product')
       <!-- end product section -->
-
       <!-- subscribe section -->
       @include('home.subscribe')
       <!-- end subscribe section -->

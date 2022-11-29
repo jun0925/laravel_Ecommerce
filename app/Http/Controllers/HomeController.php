@@ -21,6 +21,6 @@ class HomeController extends Controller
             return view('admin.home');
         }
 
-        return view('dashboard');
+        return view('home.userpage');
     }
 }
