@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return view('home.userpage');
+        $products = Product::paginate(6);
+        return view('home.userpage', compact('products'));
     }
 
     public function redirect()
@@ -21,6 +23,7 @@ class HomeController extends Controller
             return view('admin.home');
         }
 
-        return view('home.userpage');
+        $products = Product::paginate(6);
+        return view('home.userpage', compact('products'));
     }
 }
