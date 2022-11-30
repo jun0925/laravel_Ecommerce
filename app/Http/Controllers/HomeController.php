@@ -69,4 +69,24 @@ class HomeController extends Controller
         // 로그인 하지 않은 사용자
         return redirect('login');
     }
+
+    public function show_cart()
+    {
+        if (Auth::id()) {
+            $id = Auth::user()->id;
+            $carts = Cart::where('user_id','=' ,$id)->get();
+            $totalPrice = $carts->sum('price');
+            return view('home.showcart', compact('carts', 'totalPrice'));
+        }
+
+        return redirect('login');
+    }
+
+    public function remove_cart($id)
+    {
+        $cart = Cart::find($id);
+        $cart->delete();
+
+        return redirect()->back();
+    }
 }
