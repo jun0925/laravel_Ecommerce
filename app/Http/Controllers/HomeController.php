@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Stripe\Charge;
+use Stripe\Stripe;
+use App\Models\Cart;
+use App\Models\User;
+use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use App\Models\Product;
-use App\Models\Cart;
-use App\Models\Order;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -124,5 +127,57 @@ class HomeController extends Controller
         }
 
         return redirect()->back()->with('message', 'We Received Your Order. We will connect with you soon...');
+    }
+
+    public function stripe($totalprice)
+    {
+        return view('home.stripe', compact('totalprice'));
+    }
+
+    public function stripePost(Request $request, $totalprice)
+    {
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+    
+        Charge::create ([
+                "amount" => $totalprice * 100, // 달러 계산을 위해 *100을 붙임
+                "currency" => "usd",
+                "source" => $request->stripeToken,
+                "description" => "Thanks for payment" 
+        ]);
+
+        // 장바구니에 담긴 제품 삭제
+        $user = Auth::user();
+        $userid = $user->id;
+
+        $data = Cart::where('user_id', '=', $userid)->get();
+        
+        foreach($data as $data) {
+            $order = new Order;
+            $order->name = $data->name;
+            $order->email = $data->email;
+            $order->phone = $data->phone;
+            $order->address = $data->address;
+            $order->user_id = $data->user_id;
+
+            $order->product_title = $data->product_title;
+            $order->price = $data->price;
+            $order->quantity = $data->quantity;
+            $order->image = $data->image;
+            $order->product_id = $data->product_id;
+
+            $order->payment_status = 'Paid';
+            $order->delivery_status = 'processing';
+
+            $order->save();
+
+            // Cart에서 Order로 이동했으므로 Cart 데이터 삭제
+            $cartid = $data->id;
+            $cart = Cart::find($cartid);
+            $cart->delete();
+        }
+
+        Session::flash('success', 'Payment successful!');
+
+        return back();
     }
 }
