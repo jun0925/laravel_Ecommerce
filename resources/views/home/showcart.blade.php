@@ -73,7 +73,7 @@
                 </table>
 
                 <div>
-                    <h1 class="total_deg">Total Price: {{ $totalPrice }}</h1>
+                    <h1 class="total_deg">Total Price: ${{ $totalPrice }}</h1>
                 </div>
             </div>
 
