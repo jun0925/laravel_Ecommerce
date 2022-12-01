@@ -51,6 +51,7 @@
                         <th style="padding: 10px;">Image</th>
                         <th style="padding: 10px;">Delivery</th>
                         <th style="padding: 10px;">Print PDF</th>
+                        <th style="padding: 10px;">Send Email</th>
                     </tr>
 
                     @foreach ($orders as $order)
@@ -76,6 +77,9 @@
                             </td>
                             <td>
                                 <a href="{{ url('print_pdf', $order->id) }}" class="btn btn-secondary">Print PDF</a>
+                            </td>
+                            <td>
+                                <a href="{{ url('send_email', $order->id) }}" class="btn btn-info">Send Email</a>
                             </td>
                         </tr>
                     @endforeach
