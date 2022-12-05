@@ -84,4 +84,6 @@ Route::post('/add_reply', [HomeController::class, 'add_reply']);
 
 Route::get('/product_search', [HomeController::class, 'product_search']);
 
+Route::get('/search_product', [HomeController::class, 'search_product']);
+
 Route::get('/products', [HomeController::class, 'products']);

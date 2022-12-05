@@ -31,7 +31,7 @@
                                     <input type="number" name="quantity" value="1" min="1" style="display: inline-block; width: 90px; height: 50px;">
                                  </div>
                                  <div class="col-md-4">
-                                    <input class="btn" type="submit" value="Add to Card">
+                                    <input class="btn" type="submit" value="Add to Cart">
                                  </div>
                               </div>
                            </form>

@@ -2,7 +2,7 @@
     <div class="container">
     <div class="heading_container heading_center">
         <div>
-            <form action="{{ url('product_search') }}" method="GET">
+            <form action="{{ url('search_product') }}" method="GET">
                 @csrf
                 <input style="width: 500px;" type="text" name="search" placeholder="search for Something">
                 <input type="submit" value="search">
@@ -20,15 +20,15 @@
                             Product Details
                             </a>
                             <form action="{{ url('add_cart', $product->id) }}" method="POST">
-                            @csrf
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <input type="number" name="quantity" value="1" min="1" style="display: inline-block; width: 90px; height: 50px;">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="number" name="quantity" value="1" min="1" style="display: inline-block; width: 90px; height: 50px;">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input class="btn" type="submit" value="Add to Cart">
+                                    </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <input class="btn" type="submit" value="Add to Card">
-                                </div>
-                            </div>
                             </form>
                         </div>
                     </div>
