@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <base href="/public">
     <title></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="home/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('home/css/bootstrap.css') }}" />
     <!-- font awesome style -->
-    <link href="home/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="{{ asset('home/css/font-awesome.min.css') }}" rel="stylesheet" />
     <!-- Custom styles for this template -->
-    <link href="home/css/style.css" rel="stylesheet" />
+    <link href="{{ asset('home/css/style.css') }}" rel="stylesheet" />
     <!-- responsive style -->
-    <link href="home/css/responsive.css" rel="stylesheet" />
+    <link href="{{ asset('home/css/responsive.css') }}" rel="stylesheet" />
 </head>
 <body>
     <div class="hero_area">
@@ -117,7 +116,7 @@ $(function() {
     --------------------------------------------*/
     
     var $form = $(".require-validation");
-     
+    
     $('form.require-validation').bind('submit', function(e) {
         var $form = $(".require-validation"),
         inputSelector = ['input[type=email]', 'input[type=password]',
@@ -137,7 +136,7 @@ $(function() {
             e.preventDefault();
           }
         });
-     
+    
         if (!$form.data('cc-on-file')) {
           e.preventDefault();
           Stripe.setPublishableKey($form.data('stripe-publishable-key'));
@@ -150,7 +149,7 @@ $(function() {
         }
     
     });
-      
+    
     /*------------------------------------------
     --------------------------------------------
     Stripe Response Handler
@@ -165,13 +164,13 @@ $(function() {
         } else {
             /* token contains id, last4, and card type */
             var token = response['id'];
-                 
+            
             $form.find('input[type=text]').empty();
             $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
             $form.get(0).submit();
         }
     }
-     
+
 });
 </script>
 </html>
