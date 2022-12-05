@@ -7,8 +7,9 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\PDF;
-use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Auth;
 use App\Notifications\SendEmailNotification;
+use Illuminate\Support\Facades\Notification;
 
 
 class AdminController extends Controller
@@ -39,8 +40,12 @@ class AdminController extends Controller
 
     public function view_product()
     {
-        $category = Category::all();
-        return view('admin.product', compact('category'));
+        if(Auth::id()) {
+            $category = Category::all();
+            return view('admin.product', compact('category'));
+        }
+
+        return redirect('login');
     }
 
     public function add_product(Request $request)

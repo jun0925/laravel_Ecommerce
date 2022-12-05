@@ -29,35 +29,39 @@ Route::middleware([
 
 Route::get('/redirect', [HomeController::class, 'redirect'])->middleware('auth', 'verified');
 
-Route::get('/view_category', [AdminController::class, 'view_category']);
+Route::group(['middleware'=>'admin.auth'], function () {
+    Route::get('/view_category', [AdminController::class, 'view_category']);
+    
+    Route::post('/add_category', [AdminController::class, 'add_category']);
+    
+    Route::get('/delete_category/{id}', [AdminController::class, 'delete_category']);
+    
+    Route::get('/view_product', [AdminController::class, 'view_product']);
+    
+    Route::post('/add_product', [AdminController::class, 'add_product']);
+    
+    Route::get('/show_product', [AdminController::class, 'show_product']);
+    
+    Route::get('/delete_product/{id}', [AdminController::class, 'delete_product']);
+    
+    Route::get('/update_product/{id}', [AdminController::class, 'update_product']);
+    
+    Route::post('/update_product_confirm/{id}', [AdminController::class, 'update_product_confirm']);
+    
+    Route::get('/order', [AdminController::class, 'order']);
+    
+    Route::get('/delivered/{id}', [AdminController::class, 'delivered']);
+    
+    Route::get('/print_pdf/{id}', [AdminController::class, 'print_pdf']);
+    
+    Route::get('/send_email/{id}', [AdminController::class, 'send_email']);
+    
+    Route::post('/send_user_email/{id}', [AdminController::class, 'send_user_email']);
+    
+    Route::get('/search', [AdminController::class, 'searchdata']);
+});
 
-Route::post('/add_category', [AdminController::class, 'add_category']);
 
-Route::get('/delete_category/{id}', [AdminController::class, 'delete_category']);
-
-Route::get('/view_product', [AdminController::class, 'view_product']);
-
-Route::post('/add_product', [AdminController::class, 'add_product']);
-
-Route::get('/show_product', [AdminController::class, 'show_product']);
-
-Route::get('/delete_product/{id}', [AdminController::class, 'delete_product']);
-
-Route::get('/update_product/{id}', [AdminController::class, 'update_product']);
-
-Route::post('/update_product_confirm/{id}', [AdminController::class, 'update_product_confirm']);
-
-Route::get('/order', [AdminController::class, 'order']);
-
-Route::get('/delivered/{id}', [AdminController::class, 'delivered']);
-
-Route::get('/print_pdf/{id}', [AdminController::class, 'print_pdf']);
-
-Route::get('/send_email/{id}', [AdminController::class, 'send_email']);
-
-Route::post('/send_user_email/{id}', [AdminController::class, 'send_user_email']);
-
-Route::get('/search', [AdminController::class, 'searchdata']);
 
 
 Route::get('/product_detail/{id}', [HomeController::class, 'product_detail']);
