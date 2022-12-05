@@ -74,7 +74,7 @@ class HomeController extends Controller
 
                 $cart->save();
 
-                return redirect()->back();
+                return redirect()->back()->with('message', '제품을 장바구니에 추가하였습니다.');
             } else {
                 $cart = new Cart;
                 $cart->name = $user->name;
@@ -97,7 +97,7 @@ class HomeController extends Controller
                 
                 $cart->save();
     
-                return redirect()->back();
+                return redirect()->back()->with('message', '제품을 장바구니에 추가하였습니다.');
             }
         }
 
