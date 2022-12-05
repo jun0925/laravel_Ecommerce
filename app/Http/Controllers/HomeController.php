@@ -11,13 +11,17 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Models\Comment;
+use App\Models\Reply;
 
 class HomeController extends Controller
 {
     public function index()
     {
         $products = Product::paginate(6);
-        return view('home.userpage', compact('products'));
+        $comments = Comment::orderByDesc('id')->get();
+        $replies = Reply::all();
+        return view('home.userpage', compact('products', 'comments', 'replies'));
     }
 
     public function redirect()
@@ -36,7 +40,9 @@ class HomeController extends Controller
         }
 
         $products = Product::paginate(6);
-        return view('home.userpage', compact('products'));
+        $comments = Comment::orderByDesc('id')->get();
+        $replies = Reply::all();
+        return view('home.userpage', compact('products', 'comments', 'replies'));
     }
 
     public function product_detail($id)
@@ -208,5 +214,36 @@ class HomeController extends Controller
         $order->save();
 
         return redirect()->back();
+    }
+
+    public function add_comment(Request $request)
+    {
+        if(Auth::id()) {
+            $comment = new Comment;
+            $comment->name = Auth::user()->name;
+            $comment->user_id = Auth::user()->id;
+            $comment->comment = $request->comment;
+            $comment->save();
+
+            return redirect()->back();
+        }
+
+        return redirect('login');
+    }
+
+    public function add_reply(Request $request)
+    {   
+        if(Auth::id()) {
+            $reply = new Reply;
+            $reply->name = Auth::user()->name;
+            $reply->user_id = Auth::user()->id;
+            $reply->comment_id = $request->commentId;
+            $reply->reply = $request->reply;
+            $reply->save();
+
+            return redirect()->back();
+        }
+
+        return redirect('login');
     }
 }
