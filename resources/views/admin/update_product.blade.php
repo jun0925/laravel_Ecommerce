@@ -2,8 +2,6 @@
 <html lang="ko">
   <head>
     <!-- Required meta tags -->
-    <base href="/public">
-
     @include('admin.css')
 
     <style>
@@ -86,7 +84,7 @@
 
                         <div class="div_design">
                             <label>Current Product Image :</label>
-                            <img src="/product/{{ $product->image }}" style="margin:auto;" height="100" width="100">
+                            <img src="{{ asset('/product/'.$product->image) }}" style="margin:auto;" height="100" width="100">
                         </div>
 
                         <div class="div_design">

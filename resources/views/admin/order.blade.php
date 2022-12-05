@@ -74,7 +74,7 @@
                             <td>{{ $order->payment_status }}</td>
                             <td>{{ $order->delivery_status }}</td>
                             <td>
-                                <img class="img_size" src="product/{{ $order->image }}" alt="">
+                                <img class="img_size" src="{{ asset('product/'.$order->image) }}" alt="">
                             </td>
                             <td>
                                 @if ($order->delivery_status == 'processing')
