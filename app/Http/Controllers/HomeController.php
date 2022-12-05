@@ -258,4 +258,13 @@ class HomeController extends Controller
 
         return view('home.userpage', compact('products', 'comments', 'replies'));
     }
+
+    public function products()
+    {
+        $products = Product::paginate(6);
+        $comments = Comment::orderByDesc('id')->get();
+        $replies = Reply::all();
+
+        return view('home.all_product', compact('products', 'comments', 'replies'));
+    }
 }
