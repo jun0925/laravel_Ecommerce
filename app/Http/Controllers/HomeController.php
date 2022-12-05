@@ -246,4 +246,16 @@ class HomeController extends Controller
 
         return redirect('login');
     }
+
+    public function product_search(Request $request)
+    {
+        $search_text = $request->search;
+        
+        $products = Product::where('title', 'LIKE', "%{$search_text}%")->orWhere('category', 'LIKE', "%{$search_text}%")->paginate(6);
+
+        $comments = Comment::orderByDesc('id')->get();
+        $replies = Reply::all();
+
+        return view('home.userpage', compact('products', 'comments', 'replies'));
+    }
 }
