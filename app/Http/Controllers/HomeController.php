@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\Comment;
 use App\Models\Reply;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class HomeController extends Controller
 {
@@ -74,7 +75,8 @@ class HomeController extends Controller
 
                 $cart->save();
 
-                return redirect()->back()->with('message', '제품을 장바구니에 추가하였습니다.');
+                Alert::info('Product Added Successfully', 'We have addeed product to the cart');
+                return redirect()->back();
             } else {
                 $cart = new Cart;
                 $cart->name = $user->name;
@@ -111,6 +113,7 @@ class HomeController extends Controller
             $id = Auth::user()->id;
             $carts = Cart::where('user_id','=' ,$id)->get();
             $totalPrice = $carts->sum('price');
+
             return view('home.showcart', compact('carts', 'totalPrice'));
         }
 
@@ -122,6 +125,7 @@ class HomeController extends Controller
         $cart = Cart::find($id);
         $cart->delete();
 
+        Alert::info('Product Removed', 'You Have Remove a Product From The Cart');
         return redirect()->back();
     }
 

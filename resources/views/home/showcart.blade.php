@@ -20,6 +20,7 @@
         <link href="{{ asset('home/css/style.css') }}" rel="stylesheet" />
         <!-- responsive style -->
         <link href="{{ asset('home/css/responsive.css') }}" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <style>
             .center {
                 margin: auto;
@@ -46,6 +47,7 @@
         </style>
     </head>
     <body>
+        @include('sweetalert::alert')
         <div class="hero_area">
             <!-- header section strats -->
             @include('home.header')
@@ -74,7 +76,7 @@
                             <td>{{ $cart->quantity }}</td>
                             <td>${{ $cart->price }}</td>
                             <td><img src="/product/{{ $cart->image }}" class="img_deg"></td>
-                            <td><a href="{{ url('/remove_cart', $cart->id) }}" onclick="return confirm('Are you sure to remove this product?')" class="btn btn-danger">Remove Product</a></td>
+                            <td><a href="{{ url('/remove_cart', $cart->id) }}" onclick="confirmation(event)" class="btn btn-danger">Remove Product</a></td>
                         </tr>
                     @endforeach
                 </table>
@@ -109,5 +111,23 @@
         <script src="{{ asset('home/js/bootstrap.js') }}"></script>
         <!-- custom js -->
         <script src="{{ asset('home/js/custom.js') }}"></script>
+        <script>
+            function confirmation(ev) {
+                ev.preventDefault();
+                var urlToRedirect = ev.currentTarget.getAttribute('href');
+                console.log(urlToRedirect);
+                swal({
+                    title: "Are you sure to cancel this product",
+                    text: "You will not be able to revert this!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willCancel) => {
+                    if(willCancel) {
+                        window.location.href = urlToRedirect;
+                    }
+                });
+            }
+        </script>
     </body>
 </html>
